@@ -24,4 +24,12 @@ router.post("/users", (0, validateDTO_1.validateDTO)(UserDTO_1.UserDTO), (req, r
         next(error);
     }
 }));
+router.get("/users", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield userController.getAllUsers(req, res);
+    }
+    catch (error) {
+        next(error);
+    }
+}));
 exports.default = router;

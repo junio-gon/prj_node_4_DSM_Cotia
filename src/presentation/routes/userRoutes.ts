@@ -17,4 +17,11 @@ router.post("/users",validateDTO(UserDTO), async(req, res, next) => {
     }
 } );
 
+router.get("/users", async(req, res, next) => {
+    try {
+        await userController.getAllUsers(req, res);
+    } catch (error) {
+        next(error);
+    }
+} );
 export default router;
