@@ -24,4 +24,13 @@ router.get("/users", async(req, res, next) => {
         next(error);
     }
 } );
+
+router.get("/users/:email", async(req, res, next) => {
+    try {
+        await userController.getUserByEmail(req, res);
+    } catch (error) {
+        next(error);
+    }
+} );
+
 export default router;
