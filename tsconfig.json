@@ -12,8 +12,9 @@
         "paths": {
             "@domain/*": ["domain/*"],
             "@application/*": ["application/*"],
-            "@infrasctructure/*": ["application/*"],
+            "@infrasctructure/*": ["infrasctructure/*"],
             "@presentation/*": ["presentation/*"]
         }
-    }
+    },
+    "exclude": ["jest.config.ts"]
 }
