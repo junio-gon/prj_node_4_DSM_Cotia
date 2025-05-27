@@ -7,6 +7,7 @@ import { Database } from "infrasctructure/config/Database";
 dotenv.config();
 
 async function startApp() {
+    initSentry();
     await Database.init();
     console.log("Banco de dados inicializado com sucesso!");
 
