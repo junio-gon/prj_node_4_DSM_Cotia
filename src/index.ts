@@ -18,8 +18,8 @@ async function startApp() {
     app.use(sentryErrorHandler);
     app.use(fallbackErrorHandler);
 
-      // var aaa = Sentry.captureException(new Error("Erro de teste do Sentry!"));
-      // console.log("Erro de teste enviado para o Sentry. " + aaa);
+    // var error = Sentry.captureException(new Error("Erro de teste do Sentry!"));
+    // console.log("Erro de teste enviado para o Sentry. " + aaa);
 
     const userRoutes = await import("@presentation/routes/userRoutes");
     app.use("/api", userRoutes.default);
