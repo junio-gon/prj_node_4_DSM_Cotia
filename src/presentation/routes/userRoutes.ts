@@ -2,6 +2,7 @@ import { Router } from "express";
 import { UserController } from "@presentation/controllers/UserController";
 import { validateDTO } from "@presentation/controllers/middlewares/validateDTO";
 import { UserDTO } from "@presentation/dtos/UserDTO";
+import { authenticateJWT } from '@infrasctructure/middlewares/authenticateJWT';
 
 
 const router = Router();
@@ -25,7 +26,7 @@ router.get("/users", async(req, res, next) => {
     }
 } );
 
-router.get("/users/:email", async(req, res, next) => {
+router.get('/users/:email', authenticateJWT as any, async (req, res, next) => {
     try {
         await userController.getUserByEmail(req, res);
     } catch (error) {

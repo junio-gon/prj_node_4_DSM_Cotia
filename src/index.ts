@@ -23,7 +23,10 @@ async function startApp() {
     // console.log("Erro de teste enviado para o Sentry. " + aaa);
 
     const userRoutes = await import("@presentation/routes/userRoutes");
+    const authRoutes = await import("@presentation/routes/authRoutes");
+
     app.use("/api", userRoutes.default);
+    app.use("/auth", authRoutes.default);
 
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => console.log(`Application is running on port ${PORT}`));

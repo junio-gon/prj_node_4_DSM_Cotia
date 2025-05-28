@@ -5,11 +5,13 @@ import { GetUserByEmailUseCase } from '@application/useCases/GetUserByEmailUseCa
 import { UserRepository } from '@infrasctructure/repositories/UserRepository';
 import { UserDTO } from '@presentation/dtos/UserDTO';
 import { Logger } from 'utils/Logger';
+import bcrypt from 'bcrypt';
+import { generateToken } from 'utils/jwt';
 
 export class UserController{
-    private createUserUseCase: CreateUserUseCase;
-    private getAllUsersUsecase: GetAllUsersUseCase;
-    private getByEmailUsecase: GetUserByEmailUseCase;
+    private readonly createUserUseCase: CreateUserUseCase;
+    private readonly getAllUsersUsecase: GetAllUsersUseCase;
+    private readonly getByEmailUsecase: GetUserByEmailUseCase;
 
     constructor(){
         const userRepository = new UserRepository();
@@ -21,7 +23,8 @@ export class UserController{
     async createUser(req: Request, res: Response) {
         try {
             const { name, email } = req.body;
-            const user = await this.createUserUseCase.execute(name, email);
+            // const user = await this.createUserUseCase.execute(name, email);
+            const user = await this.createUserUseCase.execute(req.body as UserDTO);
             
             return res.status(201).json(user);
         } catch (error) {
@@ -62,4 +65,26 @@ export class UserController{
             return res.status(400).json({error: (error as Error).message});
         }
     }
+    /*
+    async login(req: Request, res: Response) {
+        try {
+            const { email, password } = req.body;
+            const user = await this.getByEmailUsecase.execute(email);
+
+            if (!user) {
+                return res.status(404).json({ error: 'User not found' });
+            }
+
+            const isPasswordValid = await bcrypt.compare(password ?? '', user.password ?? '');
+            if (!isPasswordValid) {
+                return res.status(401).json({ error: 'Invalid credentials' });
+            }
+
+            const token = generateToken({ id: user.id, email: user.email });
+            return res.status(200).json({ token });
+        } catch (error) {
+            return res.status(400).json({ error: (error as Error).message });
+        }
+    }
+    */
 }
