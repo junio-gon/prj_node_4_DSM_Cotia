@@ -12,7 +12,7 @@ export class CreateUserUseCase {
         if (existingUser) {
             throw new Error("Já existe um usuário registrado com este e-mail.");
         }
-
+        
         const hashedPassword = await bcrypt.hash(userDTO.password ?? '', 10);
         const user = new User(userDTO.name, userDTO.email, hashedPassword);
 

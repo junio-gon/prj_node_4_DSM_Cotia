@@ -114,6 +114,10 @@ describe('UserController (Integração)', () => {
     controller = new UserController();
   });
 
+  afterAll(async () => {
+    await Database.close(); // Fechar pool
+  });
+
   // afterAll(async () => {
   //   await Database.close(); // Fechar pool
   // });
@@ -125,14 +129,14 @@ describe('UserController (Integração)', () => {
 
   // Teste de criar usuário e salvar no banco
   it('deve criar um usuário e persistir no banco', async () => {
-    const req = {
-      body: { name: 'João', email: 'joao@example.com' }
+    let req = {
+      body: { name: 'João', email: 'joao@example.com', password: '123' }
     } as Request;
 
     // Mock do res com spies
-    const jsonMock = jest.fn();
-    const statusMock = jest.fn().mockReturnValue({ json: jsonMock });
-    const res = { status: statusMock } as unknown as Response;
+    let jsonMock = jest.fn();
+    let statusMock = jest.fn().mockReturnValue({ json: jsonMock });
+    let res = { status: statusMock } as unknown as Response;
 
     await controller.createUser(req, res);
 
@@ -153,14 +157,14 @@ describe('UserController (Integração)', () => {
   });
 
   it('deve dar erro de validação', async () => {
-    const req = {
+    let req = {
       body: { name: 'João', email: null }
     } as Request;
 
     // Mock do res com spies
-    const jsonMock = jest.fn();
-    const statusMock = jest.fn().mockReturnValue({ json: jsonMock });
-    const res = { status: statusMock } as unknown as Response;
+    let jsonMock = jest.fn();
+    let statusMock = jest.fn().mockReturnValue({ json: jsonMock });
+    let res = { status: statusMock } as unknown as Response;
 
     await controller.createUser(req, res);
 

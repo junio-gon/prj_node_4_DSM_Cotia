@@ -27,4 +27,11 @@ export class Database {
 
         return this.pool;   
     }
+
+    public static async close() {
+        if (this.pool) {
+            await this.pool.end();
+            this.pool = null;
+        }
+    }
 }

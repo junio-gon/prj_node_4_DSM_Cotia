@@ -4,9 +4,7 @@ import { GetAllUsersUseCase } from '@application/useCases/GetAllUsersUseCase';
 import { GetUserByEmailUseCase } from '@application/useCases/GetUserByEmailUseCase';
 import { UserRepository } from '@infrasctructure/repositories/UserRepository';
 import { UserDTO } from '@presentation/dtos/UserDTO';
-import { Logger } from 'utils/Logger';
-import bcrypt from 'bcrypt';
-import { generateToken } from 'utils/jwt';
+import { Logger } from '@utils/Logger';
 
 export class UserController{
     private readonly createUserUseCase: CreateUserUseCase;
@@ -22,10 +20,11 @@ export class UserController{
 
     async createUser(req: Request, res: Response) {
         try {
-            const { name, email } = req.body;
+            //const { name, email, password } = req.body;
             // const user = await this.createUserUseCase.execute(name, email);
+
             const user = await this.createUserUseCase.execute(req.body as UserDTO);
-            
+
             return res.status(201).json(user);
         } catch (error) {
             return res.status(400).json({error: (error as Error).message });

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { GetUserByEmailUseCase } from '@application/useCases/GetUserByEmailUseCase';
 import { UserRepository } from '@infrasctructure/repositories/UserRepository';
 import bcrypt from 'bcrypt';
-import { generateToken } from 'utils/jwt';
+import { generateToken } from '@utils/jwt';
 
 export class AuthController{
     private readonly getByEmailUsecase: GetUserByEmailUseCase;

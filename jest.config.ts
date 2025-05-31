@@ -12,8 +12,14 @@ const config: Config = {
     '^@infrasctructure/(.*)$': '<rootDir>/src/infrasctructure/$1',
     '^@application/(.*)$': '<rootDir>/src/application/$1',
     '^@domain/(.*)$': '<rootDir>/src/domain/$1',
+    '^@utils/(.*)$': '<rootDir>/src/utils/$1',
     // adicione outros aliases que tiver
   },
+  verbose: true,
+  testPathIgnorePatterns: [
+    "/node_modules/",
+    "/dist/"
+  ],
 };
 
 export default config;
