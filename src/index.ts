@@ -2,14 +2,24 @@ import express from "express";
 import dotenv from "dotenv";
 import { initSentry } from "@infrasctructure/config/sentry";
 import { sentryRequestHandler, sentryErrorHandler, fallbackErrorHandler } from '@infrasctructure/middlewares/sentry.middleware';
-import { Database } from "infrasctructure/config/Database";
+// import { Database } from "infrasctructure/config/Database";
+import "reflect-metadata";
+import { AppDataSource } from "@infrasctructure/config/Database";
 
 dotenv.config();
 
 async function startApp() {
     initSentry();
-    await Database.init();
-    console.log("Banco de dados inicializado com sucesso!");
+    // await Database.init();
+    // console.log("Banco de dados inicializado com sucesso!");
+    AppDataSource.initialize()
+      .then(() => {
+        console.log("📦 Banco de dados conectado com sucesso!");
+        // iniciar servidor aqui
+      })
+      .catch((err) => {
+        console.error("Erro ao conectar no banco de dados:", err);
+      });
 
     const app = express();
     app.use(express.json());
