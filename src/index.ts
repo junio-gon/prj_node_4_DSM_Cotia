@@ -5,6 +5,8 @@ import { sentryRequestHandler, sentryErrorHandler, fallbackErrorHandler } from '
 // import { Database } from "infrasctructure/config/Database";
 import "reflect-metadata";
 import { AppDataSource } from "@infrasctructure/config/Database";
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from '@utils/swagger.config';
 
 dotenv.config();
 
@@ -37,6 +39,13 @@ async function startApp() {
 
     app.use("/api", userRoutes.default);
     app.use("/auth", authRoutes.default);
+
+    // UI padrão (acessar em /api-docs)
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    app.use('/api-docs/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    // app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    // app.use('/auth', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => console.log(`Application is running on port ${PORT}`));

@@ -10,6 +10,27 @@ const userController = new UserController();
 
 // router.get("/users", (req, res) => { res.send("User rotes") });
 
+/**
+ * @swagger
+ * /api/users:
+ *   post:
+ *     summary: Cria um novo usuário
+ *     tags: [Usuários]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Usuário criado com sucesso
+ */
 router.post("/users",validateDTO(UserDTO), async(req, res, next) => {
     try {
         await userController.createUser(req, res);
@@ -18,7 +39,21 @@ router.post("/users",validateDTO(UserDTO), async(req, res, next) => {
     }
 } );
 
-router.get("/users", async(req, res, next) => {
+/**
+ * @swagger
+ * /api/users:
+ *   get:
+ *     summary: Retorna todos os usuários
+ *     tags: [Usuários]
+ *     security:
+ *       - bearerAuth: []   # <- Aqui diz ao Swagger que essa rota precisa de autenticação
+ *     responses:
+ *       200:
+ *         description: Lista de usuários retornada com sucesso
+ *       401:
+ *         description: Token ausente ou inválido
+ */
+router.get("/users", authenticateJWT as any, async(req, res, next) => {
     try {
         await userController.getAllUsers(req, res);
     } catch (error) {
